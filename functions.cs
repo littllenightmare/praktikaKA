@@ -25,18 +25,19 @@ namespace praktikaKA
         {
             try
             {
+                double xlast = 0, ylast=300;
+                double height = 0, width = 0;
                 graph.Children.Clear();
-                int max = numbers.Max();
-                int min = numbers.Min();
-                int range = max - min;
 
                 for (int i = 0; i < numbers.Length - 1; i++)
                 {
-                    double x1 = i * (graph.Width / (numbers.Length - 1));
-                    double y1 = graph.Height - ((numbers[i] - min) / range * graph.Height);
-                    double x2 = (i + 1) * (graph.Width / (numbers.Length - 1));
-                    double y2 = graph.Height - ((numbers[i + 1] - min) / range * graph.Height);
+                    double x1 = xlast;
+                    double y1 = ylast;
+                    double x2 = xlast + 100;
+                    double y2 = ylast - numbers[i+1] - 30;
 
+                    height += y1-y2;
+                    width += x2-x1;
                     Line line = new Line
                     {
                         X1 = x1,
@@ -47,7 +48,10 @@ namespace praktikaKA
                         StrokeThickness = 2
                     };
 
-                    graph.Children.Add(line);
+                     if (width <= 800 & height <= 450)
+                        graph.Children.Add(line);
+                    xlast = x2;
+                    ylast = y2;
                 }
             }
             catch
